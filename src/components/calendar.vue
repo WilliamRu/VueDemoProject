@@ -1,15 +1,13 @@
 <template>
     <div class="container">
         <div class="tabs">
-            <div v-for="item in tabs" class="tabs__item" @click="changeTabs(item.id)">
+            <div v-for="item in tabs" class="tabs__item" @click="changeTabs($event,item.id)" data-active>
                 {{item.title}}
             </div>
         </div>
-        <button @click="changeData"></button>
         <div class="info">
             <div class="info__calendar">
                 <v-date-picker
-
                         @input="changeData"
                         mode='single'
                         v-model='selectedDate'
@@ -29,6 +27,7 @@
     setupCalendar({
         firstDayOfWeek: 2,
         popoverVisibility: "visible",
+        popoverExpanded: true
     });
 
     export default {
@@ -51,13 +50,6 @@
                     }
                 ],
                 selectedDate: new Date(),
-                /*formats: {
-                    title: 'MMMM YYYY',
-                    weekdays: 'W',
-                    navMonths: 'MMM',
-                    input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'], // Only for `v-date-picker`
-                    dayPopover: 'L', // Only for `v-date-picker`
-                }*/
             };
         },
         computed: {
@@ -66,8 +58,16 @@
             },
         },
         methods: {
-            changeTabs(tabsID) {
-                this.$store.dispatch('changeTabs', tabsID)
+            changeTabs: function (e,tabsID) {
+                this.$store.dispatch('changeTabs', tabsID);
+
+                let arr =  document.body.querySelectorAll('[data-active]');
+                arr.forEach(function (item, i, arr ) {
+                    item.classList.remove('active')
+                });
+                if (!(e.target.getAttribute('class').includes('active'))){
+                     e.target.className += ' active'
+                }
             },
             changeData() {
                 let dataDate = this.selectedDate.getDate().toString();
@@ -101,8 +101,20 @@
 
     .tabs {
         display: flex;
-    }
-    Popover {
-        display: none;
+        margin-bottom: 20px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &__item {
+            padding: 14px 35px;
+            border: 1px solid #e4e4e4;
+            margin-right: 10px;
+
+            &.active {
+                background: #e4e4e4;
+            }
+        }
     }
 </style>

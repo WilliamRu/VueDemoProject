@@ -99,9 +99,6 @@ export const store = new Vuex.Store({
         filterSchedule: state => {
             return state.schedule.filter(schedule => ((schedule.tabsId == state.tabsActive) && (schedule.date == state.dateActive)))
         },
-        datenow: state => {
-            return state.dateActive;
-        }
     },
     actions: {
         changeTabs({commit}, id) {
@@ -114,7 +111,6 @@ export const store = new Vuex.Store({
     mutations: {
         CHANGE_TABS: (state,id) =>
             state.tabsActive = id,
-
         CHANGE_DATA: (state,date) =>
             state.dateActive = date
     },
