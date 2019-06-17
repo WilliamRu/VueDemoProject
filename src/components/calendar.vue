@@ -1,13 +1,16 @@
 <template>
     <div class="container">
         <div class="tabs">
-            <div v-for="item in tabs" class="tabs__item" @click="changeTabs($event,item.id)" data-active>
+            <div v-for="item in tabs" :key="item.id" class="tabs__item" :class="{active : item.active}" @click="changeTabs($event,item.id)">
                 {{item.title}}
+                {{item.id}}
             </div>
         </div>
         <div class="info">
             <div class="info__calendar">
                 <functional-calendar
+                        :class="calendarStyle"
+                        :apply-stylesheet="false"
                         :is-date-picker="true"
                         :date-format="'dd.mm.yyyy'"
                         :day-names="['П', 'В', 'С', 'Ч', 'П', 'С', 'В']"
@@ -18,6 +21,8 @@
             </div>
             <schedule></schedule>
         </div>
+        <hr>
+        Расписание есть на 20.06 и на 20.07
     </div>
 </template>
 
@@ -49,7 +54,8 @@
                     dateFormat: 'dd.mm.yyyy',
                     dayNames: ['П', 'В', 'С', 'Ч', 'П', 'С', 'В'],
                     monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
-                }
+                },
+                calendarStyle: 'calendarStyle'
             };
         },
         computed: {
@@ -60,14 +66,7 @@
         methods: {
             changeTabs: function (e, tabsID) {
                 this.$store.dispatch('changeTabs', tabsID);
-
-                let arr = document.body.querySelectorAll('[data-active]');
-                arr.forEach(function (item, i, arr) {
-                    item.classList.remove('active')
-                });
-                if (!(e.target.getAttribute('class').includes('active'))) {
-                    e.target.className += ' active'
-                }
+                this.$store.dispatch('changeTabsActive', tabsID);
             },
             changeData() {
                 let dataSelected = this.calendarData.selectedDate;
@@ -78,6 +77,11 @@
 </script>
 
 <style lang="scss" scoped>
+    /deep/.calendarStyle {
+        width: 100%;
+        height: 100%;
+        @import "../assets/scss/calendarStyle.scss";
+    }
     .container {
         display: block;
         width: 1366px;
@@ -91,7 +95,7 @@
     }
 
     .info__calendar {
-        width: 300px;
+        flex: 0 0 340px;
     }
 
     .tabs {
