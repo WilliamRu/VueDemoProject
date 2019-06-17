@@ -4,8 +4,7 @@
 set -e
 
 # сборка
-npm run dev
-
+npm run build
 # переход в каталог сборки
 cd dist
 
