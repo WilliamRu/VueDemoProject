@@ -3,7 +3,6 @@
         <div class="tabs">
             <div v-for="item in tabs" :key="item.id" class="tabs__item" :class="{active : item.active}" @click="changeTabs($event,item.id)">
                 {{item.title}}
-                {{item.id}}
             </div>
         </div>
         <div class="info">
@@ -55,14 +54,17 @@
                     dayNames: ['П', 'В', 'С', 'Ч', 'П', 'С', 'В'],
                     monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
                 },
-                calendarStyle: 'calendarStyle'
+                calendarStyle: 'calendarStyle',
+                dateNowVal: ''
             };
         },
+
         computed: {
             tabs() {
                 return this.$store.state.tabs;
             },
         },
+
         methods: {
             changeTabs: function (e, tabsID) {
                 this.$store.dispatch('changeTabs', tabsID);
@@ -70,8 +72,18 @@
             },
             changeData() {
                 let dataSelected = this.calendarData.selectedDate;
-                this.$store.dispatch('changeData', dataSelected)
+                this.$store.dispatch('changeData', dataSelected);
             },
+        },
+
+        beforeCreate: function () {
+            let dateNow = new Date();
+            let dateDate = dateNow.getDate().toString();
+            let dateMonth = dateNow.getMonth()+1;
+            let dateYear = dateNow.getFullYear().toString();
+            let dateFull = dateDate+'.'+dateMonth.toString()+'.'+dateYear;
+            this.dateNowVal = dateFull;
+            this.$store.dispatch('changeData', this.dateNowVal)
         }
     }
 </script>

@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
             {
                 id: 0,
                 tabsId: 0,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность 20.6.2019 Калинина 18 1',
                 classroom: '403'
@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
             {
                 id: 1,
                 tabsId: 0,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:31',
                 name: 'Информационная безопасность 20.6.2019 Калинина 18 2',
                 classroom: '403'
@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
             {
                 id: 2,
                 tabsId: 0,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:32',
                 name: 'Информационная безопасность 20.6.2019 Калинина 18 3',
                 classroom: '403'
@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
             {
                 id: 3,
                 tabsId: 0,
-                date: '21.6.2019',
+                date: '18.6.2019',
                 time: '08:00 - 09:33',
                 name: 'Информационная безопасность 21.6.2019 Калинина 18 1',
                 classroom: '403'
@@ -41,7 +41,7 @@ export const store = new Vuex.Store({
             {
                 id: 4,
                 tabsId: 0,
-                date: '21.6.2019',
+                date: '18.6.2019',
                 time: '08:00 - 09:34',
                 name: 'Информационная безопасность 21.6.2019 Калинина 18 2',
                 classroom: '403'
@@ -49,7 +49,7 @@ export const store = new Vuex.Store({
             {
                 id: 5,
                 tabsId: 1,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность 20.6.2019 Казакова 11/1 1',
                 classroom: '403'
@@ -57,7 +57,7 @@ export const store = new Vuex.Store({
             {
                 id: 6,
                 tabsId: 1,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность  20.6.2019 Казакова 11/1 2',
                 classroom: '403'
@@ -65,7 +65,7 @@ export const store = new Vuex.Store({
             {
                 id: 7,
                 tabsId: 1,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность (в соответствии с МС ИСО серии 17799:2000)',
                 classroom: '403'
@@ -73,7 +73,7 @@ export const store = new Vuex.Store({
             {
                 id: 8,
                 tabsId: 1,
-                date: '20.7.2019',
+                date: '18.7.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность (в соответствии с МС ИСО серии 17799:2000)',
                 classroom: '403'
@@ -81,7 +81,7 @@ export const store = new Vuex.Store({
             {
                 id: 9,
                 tabsId: 1,
-                date: '20.7.2019',
+                date: '18.7.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность (в соответствии с МС ИСО серии 17799:2000)',
                 classroom: '403'
@@ -89,7 +89,7 @@ export const store = new Vuex.Store({
             {
                 id: 10,
                 tabsId: 2,
-                date: '20.6.2019',
+                date: '17.6.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность (в соответствии с МС ИСО серии 17799:2000)',
                 classroom: '403'
@@ -97,7 +97,7 @@ export const store = new Vuex.Store({
             {
                 id: 11,
                 tabsId: 2,
-                date: '20.6.2019',
+                date: '18.6.2019',
                 time: '08:00 - 09:30',
                 name: 'Информационная безопасность (в соответствии с МС ИСО серии 17799:2000)',
                 classroom: '403'
@@ -108,12 +108,13 @@ export const store = new Vuex.Store({
             {id: 1, title: 'Казакова 11/1', active: false},
             {id: 2, title: 'Прочие площадки', active: false},
         ],
-        tabsActive: 1,
+        tabsActive: 0,
         dateActive: '',
     },
     getters: {
         filterSchedule: state => {
-            return state.schedule.filter(schedule => ((schedule.tabsId == state.tabsActive) && (schedule.date == state.dateActive)))
+            let DataSchedule = state.schedule.filter(schedule => ((schedule.tabsId == state.tabsActive) && (schedule.date == state.dateActive)));
+            return DataSchedule.length !== 0?DataSchedule:false
         },
     },
     actions: {
